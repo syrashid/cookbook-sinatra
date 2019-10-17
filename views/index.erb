@@ -1,0 +1,34 @@
+<h1 class="mt-5">Online Cookbook</h1>
+
+<div class="recipes d-flex flex-column">
+  <% @recipes.each_with_index do |recipe, index| %>
+  <div class="d-flex flex-row align-items-center border border-primary mb-3 p-3 rounded justify-content-between">
+    <div class="d-flex flex-row align-items-center">
+      <div class="mr-3">
+        <% if recipe.status %>
+        <i class="far fa-check-square"></i>
+        <% else %>
+        <i class="far fa-square"></i>
+        <% end %>
+      </div>
+
+      <div>
+        <h5 class="m-1"><%= recipe.name %></h5>
+        <p class="text-muted m-1"><%= recipe.description %></p>
+      </div>
+    </div>
+
+    <div>
+      <form class="mb-2" method="POST" action="/complete-recipe/<%= index %>">
+        <input type="submit" class="btn btn-success btn-block" value="COMPLETE"></input>
+      </form>
+      <form method="POST" action="/delete-recipe/<%= index %>">
+        <input type="submit" class="btn btn-danger btn-block" value="DELETE"></input>
+      </form>
+    </div>
+  </div>
+  <% end %>
+
+
+  <a href="/new" class= "btn btn-primary btn-block p-3"> Add a new recipe </a>
+</div>
