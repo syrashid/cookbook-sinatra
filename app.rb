@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'pry-byebug'
+require 'nokogiri'
 require 'better_errors'
 require 'open-uri'
 require_relative 'app/cookbook'
@@ -23,6 +24,22 @@ get '/new' do
   erb :new
 end
 
+post '/search-results'  do
+  @search_term = params[:recipeSearch]
+  url = "https://www.myrecipes.com/search?q=#{@search_term}"
+  doc = Nokogiri::HTML(open(url), nil, 'utf-8')
+  @titles = doc.css(".search-result-title-link-text").first(5).map(&:text).map(&:strip)
+  @descriptions = doc.css(".search-result-description").first(5).map(&:text).map(&:strip)
+
+  erb :search
+end
+
+post'/add-recipe' do
+  recipe = Recipe.new(params[:recipeName], params[:recipeDesc])
+  cookbook.add_recipe(recipe)
+  redirect '/'
+end
+
 post '/recipes' do
   recipe = Recipe.new(params[:recipeName], params[:recipeDescription])
   cookbook.add_recipe(recipe)
@@ -38,4 +55,3 @@ post '/complete-recipe/:index' do
   cookbook.complete(params[:index].to_i)
   redirect '/'
 end
-

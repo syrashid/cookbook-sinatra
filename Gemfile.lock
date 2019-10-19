@@ -47,7 +47,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
-  nokogiri (~> 1.5)
+  nokogiri
   pry-byebug
   sinatra
   sinatra-contrib

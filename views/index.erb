@@ -1,6 +1,12 @@
 <h1 class="mt-5">Online Cookbook</h1>
 
 <div class="recipes d-flex flex-column">
+  <form class=pt-3 method = "POST" action="/search-results">
+    <div class="form-group d-flex">
+      <input type="text" class="form-control" id="recipeSearch" placeholder="Search by Ingredient" name="recipeSearch">
+      <input type="submit" class="btn btn-primary ml-2"></input>
+    </div>
+  </form>
   <% @recipes.each_with_index do |recipe, index| %>
   <div class="d-flex flex-row align-items-center border border-primary mb-3 p-3 rounded justify-content-between">
     <div class="d-flex flex-row align-items-center">
