@@ -1,19 +1,19 @@
 <h1 class="mt-5">Recipe Results For <%= @search_term.downcase.capitalize %></h1>
 
 <div class="results d-flex flex-column">
-  <% @titles.each_with_index do |title, index| %>
+  <% @recipes.each do |recipe| %>
   <div class="d-flex flex-row align-items-center border border-primary mb-3 p-3 rounded justify-content-between">
 
       <div class="info">
-        <h4><%= title %></h4>
-        <p class="text-muted mt-0"><%= @descriptions[index] %></p>
+        <h4><%= recipe.name %></h4>
+        <p class="text-muted mt-0"><%= recipe.description %></p>
       </div>
 
       <div>
-        <% string = title %>
+        <% string = recipe.name %>
       <form method="POST" action="/add-internet-recipe">
-        <input type="hidden" name="recipeName" value="<%=title%>">
-        <input type="hidden" name="recipeDesc" value="<%=@descriptions[index]%>">
+        <input type="hidden" name="recipeName" value="<%=recipe.name%>">
+        <input type="hidden" name="recipeDesc" value="<%=recipe.description%>">
         <input type="submit" class="btn btn-success btn-block" value="ADD RECIPE">
       </form>
       </div>

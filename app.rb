@@ -3,9 +3,9 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'pry-byebug'
-require 'nokogiri'
+require_relative 'app/services/scraper_myrecipes'
 require 'better_errors'
-require 'open-uri'
+
 require_relative 'app/cookbook'
 require_relative 'app/recipe'
 
@@ -29,11 +29,7 @@ end
 post '/search-results' do
   # Turn this into a service object
   @search_term = params[:recipeSearch]
-  url = "https://www.myrecipes.com/search?q=#{@search_term}"
-  doc = Nokogiri::HTML(open(url), nil, 'utf-8')
-  @titles = doc.css('.search-result-title-link-text').first(5).map(&:text).map(&:strip)
-  @descriptions = doc.css('.search-result-description').first(5).map(&:text).map(&:strip)
-
+  @recipes = ScrapeMyRecipes.call(params[:recipeSearch])
   erb :search
 end
 
