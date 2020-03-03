@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'services/csv_object'
 
 class Cookbook
