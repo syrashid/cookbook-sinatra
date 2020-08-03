@@ -28,6 +28,7 @@ end
 
 post '/search-results' do
   # Turn this into a service object
+  binding.pry
   @search_term = params[:recipeSearch]
   @recipes = ScrapeMyRecipes.call(params[:recipeSearch])
   erb :search
